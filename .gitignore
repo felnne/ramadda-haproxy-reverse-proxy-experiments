@@ -1,0 +1,5 @@
+haproxy/localhost.crt
+haproxy/localhost.key
+haproxy/localhost.pem
+tomcat/logs/*
+ramadda/*

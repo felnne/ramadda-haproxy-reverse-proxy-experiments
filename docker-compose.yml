@@ -1,0 +1,24 @@
+---
+version: '2'
+
+services:
+  app:
+    build: .
+    image: ramadda-local
+    volumes:
+      - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+      - ./ramadda/data/repository:/data/repository
+      - ./tomcat/logs:/usr/local/tomcat/logs
+      - ./tomcat-apps/tomcat-environment:/usr/local/tomcat/webapps/tomcat-environment
+    ports:
+      - 8080:8080
+
+  haproxy:
+    image: haproxy:1.8-alpine
+    volumes:
+      - ./haproxy/localhost.pem:/etc/ssl/private/localhost.pem
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      - 9001:443
+    depends_on:
+      - app
