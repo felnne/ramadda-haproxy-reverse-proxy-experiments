@@ -47,7 +47,7 @@ Tomcat is configured to listen for HTTP connections on port `8080`. It then dete
 should be sent to (based on the URL path) and provides information about the incoming request through a 
 [`HttpServletRequest`](https://tomcat.apache.org/tomcat-8.5-doc/servletapi/javax/servlet/http/HttpServletRequest.html).
 
-Tomcat is configured using `tomcat/server.xml`, log files are written to `tomcat/`.
+Tomcat is configured using `tomcat/server.xml`, log files are written to `tomcat/logs`.
 
 A [RemoteIpValve](https://tomcat.apache.org/tomcat-8.5-doc/api/org/apache/catalina/valves/RemoteIpValve.html) is
 configured to trust headers added by HAProxy, specifically whether the original request made by the client was made 
@@ -56,11 +56,14 @@ all proxies are trusted, in production this would be restricted. It also configu
 HTTPS, to match the port used by the downstream load balancer.
 
 Two applications are loaded in Tomcat, the first is a debugging script to check the values given by the 
-[`HttpServletRequest`](https://tomcat.apache.org/tomcat-8.5-doc/servletapi/javax/servlet/http/HttpServletRequest.html),
-the other is a [custom build](https://geodesystems.com/repository/entry/get/repository.war?entryid=synth%3A498644e1-20e4-426a-838b-65cffe8bd66f%3AL3JhbWFkZGFfMi4zL3JlcG9zaXRvcnkud2Fy) 
-of Ramadda with additional HTTP debugging enabled.
+[`HttpServletRequest`](https://tomcat.apache.org/tomcat-8.5-doc/servletapi/javax/servlet/http/HttpServletRequest.html).
 
 The debugging application be accessed from [localhost:9001/tomcat-environment](https://localhost:9001/tomcat-environment).
+
+The other application is a [custom build](https://geodesystems.com/repository/entry/get/repository.war?entryid=synth%3A498644e1-20e4-426a-838b-65cffe8bd66f%3AL3JhbWFkZGFfMi4zL3JlcG9zaXRvcnkud2Fy) 
+of Ramadda with additional HTTP debugging enabled.
+
+Ramadda is configured using `ramadda/ramadda.properies`, log files are written to `ramadda/logs`.
 
 The custom Ramadda build can be accessed from [localhost:9001/repository](https://localhost:9001/repository).
 
@@ -86,8 +89,9 @@ After a few seconds you should be to visit
 [localhost:9001/tomcat-environment/index.jsp](https://localhost:9001/tomcat-environment/index.jsp) to view Tomcat
 request information.
 
-Visiting [localhost:9001/repsitory](https://localhost:9001/repository) will create a new Ramadda installation, which
-will take ~10 seconds to complete.
+Visiting [localhost:9001/repsitory](https://localhost:9001/repository) will create a new Ramadda installation, logging
+to `ramadda/logs`, which will take ~10 seconds to setup. 
+
 When you first access Ramadda you will be asked to enter the installation password, this is `password`, set by the 
 `ramadda.install.password` property.
 
