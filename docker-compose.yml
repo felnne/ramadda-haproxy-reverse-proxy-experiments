@@ -7,7 +7,8 @@ services:
     image: ramadda-local
     volumes:
       - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
-      - ./ramadda/data/repository:/data/repository
+      - ./ramadda/ramadda.properties:/data/repository/ramadda.properties
+      - ./ramadda/logs:/data/repository/logs
       - ./tomcat/logs:/usr/local/tomcat/logs
       - ./tomcat-apps/tomcat-environment:/usr/local/tomcat/webapps/tomcat-environment
     ports:

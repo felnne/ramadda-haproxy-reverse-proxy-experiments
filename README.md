@@ -88,6 +88,8 @@ request information.
 
 Visiting [localhost:9001/repsitory](https://localhost:9001/repository) will create a new Ramadda installation, which
 will take ~10 seconds to complete.
+When you first access Ramadda you will be asked to enter the installation password, this is `password`, set by the 
+`ramadda.install.password` property.
 
 You can start a shell in either container using Docker in another terminal:
 
