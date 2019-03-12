@@ -18,11 +18,18 @@
             <pre><%= request.getRequestURI() %></pre>
         </section>
         <section>
-            <h2>Full URL</h2>
+            <h2>Full URL (<code>request.getScheme()</code> + <code>request.getServerName()</code> + <code>request.getServerPort()</code> + <code>request.getRequestURI()</code> + <code>request.getQueryString()</code>)</h2>
 <pre>
-<%= request.getScheme() + "://" + request.getServerName() + request.getServerPort() + request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "")
+<%= request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "")
 %>
 </pre>
+        </section>
+        <section>
+            <h2>Ports</h2>
+            <h3><code>request.getRemotePort()</code></h3>
+            <p><code><%= request.getRemotePort() %></code></p>
+            <h3><code>request.getLocalPort()</code></h3>
+            <p><code><%= request.getLocalPort() %></code></p>
         </section>
         <section>
             <h2><code>X-Forwarded-Proto</code> header value</h2>
