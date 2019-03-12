@@ -70,15 +70,16 @@ The custom Ramadda build can be accessed from [localhost:9001/repository](https:
 ## Usage
 
 You will need [Docker](https://hub.docker.com/search/?type=edition&offering=community) and Docker Compose to use this 
-project. You will also need to generate a local, self-signed, TLS certificate for the Load Balancer to use.
+project. You will also need to generate local, self-signed, TLS certificates for the Load Balancer to use.
 
 ```shell
 # clone project
 $ git clone https://github.com/felnne/ramadda-haproxy-reverse-proxy-experiments.git
 $ cd ramadda-haproxy-reverse-proxy-experiments
-# create local self-signed certificate
+# create local self-signed certificates
 $ openssl req -x509 -out haproxy/localhost.crt -keyout haproxy/localhost.key -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -extensions EXT -config <( printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
-$ cat haproxy/localhost.key haproxy/localhost.crt > haproxy/localhost.pem
+$ openssl req -x509 -out haproxy/ramadda.test.crt -keyout haproxy/ramadda.test.key -newkey rsa:2048 -nodes -sha256 -subj '/CN=ramadda.test' -extensions EXT -config <( printf "[dn]\nCN=ramadda.test\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:ramadda.test\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+$ cat haproxy/localhost.key haproxy/localhost.crt haproxy/ramadda.test.key haproxy/ramadda.test.crt > haproxy/certs.pem
 # start HAProxy and Tomcat Docker containers
 $ docker-compose up
 ```
@@ -94,6 +95,16 @@ to `ramadda/logs`, which will take ~10 seconds to setup.
 
 When you first access Ramadda you will be asked to enter the installation password, this is `password`, set by the 
 `ramadda.install.password` property.
+
+To test accessing ramadda under a different domain, an entry will need to be added to your hosts file:
+
+```
+127.0.0.1  ramadda.test
+```
+
+The Tomcat environment application will then be available at: 
+[ramadda.test:9001/tomcat-environment/index.jsp](https://ramadda.test:9001/tomcat-environment/index.jsp). The Ramadda
+application will then be available at: [ramadda.test:9001/repository](https://ramadda.test:9001/repository).
 
 You can start a shell in either container using Docker in another terminal:
 

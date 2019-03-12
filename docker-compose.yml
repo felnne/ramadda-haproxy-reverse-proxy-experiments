@@ -17,7 +17,7 @@ services:
   haproxy:
     image: haproxy:1.8-alpine
     volumes:
-      - ./haproxy/localhost.pem:/etc/ssl/private/localhost.pem
+      - ./haproxy/certs.pem:/etc/ssl/private/certs.pem
       - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     ports:
       - 9001:443
